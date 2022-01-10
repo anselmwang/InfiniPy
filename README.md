@@ -14,6 +14,8 @@ InfiniPy是一个类似于Wox的软件。在使用电脑时，我们经常想要
   - [基础开发](#基础开发)
   - [配置Spacekey](#配置spacekey)
   - [开发更强大的插件](#开发更强大的插件)
+- [常用插件](#常用插件)
+- [安装](#安装)
 
 # 插件开发
 
@@ -61,4 +63,27 @@ def calc(expr):
 ```
 
 Goto to a wndow(`launcher.goto`)允许我们切换到一个窗口，调用这个函数后，InfiniPy将会列出所有窗口，如下图所示。这本质上是通过intellisense实现的。具体实现方法请参考`launcher.goto`的代码。
-![](attachments/goto.png)
+![](attachments/goto_windows.png)
+# 常用插件
+
+
+普通用户也录制两个视频
+
+- 确定性的窗口切换和其他shortcut切换
+    解释窗口切换
+    - 一个图片解释普通窗口
+    - 一个图片解释多个窗口情况
+    - 一个图片解释直接搜索情况
+    - 解释配置 
+      - 一个图片找到窗口的exe文件名
+      - 一个图片解释配置方法
+    
+    用少量文件解释其他shortcut切换
+
+    一个视频解释配置windows方法
+    shortcut切换其
+- calculator
+
+如果您感兴趣窗口切换的功能，参考这个链接
+
+# 安装
