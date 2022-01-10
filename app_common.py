@@ -31,9 +31,13 @@ class Leaf(SpaceKeyNode):
         super().__init__(key, comment, None, wrapped_func)
 
 def add_space_key_children(root_node: SpaceKeyNode, key_seq, config_table, func):
-    parent_node = root_node
-    for key in key_seq:
-        parent_node = parent_node.walk_to(key)
+    parent_node = walk_space_key_tree(root_node, key_seq)
     for key, parameters in config_table.items():
         canonical_name = parameters[0]
         parent_node.add_child(Leaf(key, f"Goto {canonical_name}", func, parameters[1:]))
+
+def walk_space_key_tree(root_node: SpaceKeyNode, key_seq: List):
+    parent_node = root_node
+    for key in key_seq:
+        parent_node = parent_node.walk_to(key)
+    return parent_node
