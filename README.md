@@ -10,25 +10,69 @@ InfiniPy是一个类似于Wox的软件。在使用电脑时，我们经常想要
 
 # Quick Link
 - [Quick Link](#quick-link)
+- [日常使用](#日常使用)
+  - [基础](#基础)
+  - [窗口切换插件](#窗口切换插件)
+  - [计算器插件](#计算器插件)
 - [插件开发](#插件开发)
   - [基础开发](#基础开发)
   - [配置Spacekey](#配置spacekey)
   - [开发更强大的插件](#开发更强大的插件)
-- [常用插件](#常用插件)
 - [安装](#安装)
+
+# 日常使用
+## 基础
+InfiniPy的主界面如下
+![](${workspaceFolder}/attachments/2022-01-09-20-37-58.png)
+
+重要的插件有
+- w: [窗口切换插件](#窗口切换插件) 
+- f: 快速打开当前剪贴板中的文件路径
+- d: 快速打开预定义的目录
+- u: 快速打开预定义的URL
+- cc: [计算器插件](#计算器插件)
+
+日常使用重要的快捷键如下
+- Capslock启动InfiniPy
+- Ctrl-Capslock切换键盘大小写
+- Esc隐藏InfiniPy
+- Ctrl-g清空InfiniPy中所有输入，重新开始
+- 上下键或Ctrl-j、Ctrl-k用来在智能提示中上下移动，Tab或Enter用来选择，Enter还用于执行命令。
+
+## 窗口切换插件
+
+在主界面下，输入w，进入"+Window"子菜单，通过按键或者上下键可以选择菜单项。如按d切换到vscode窗口。
+![](${workspaceFolder}/attachments/2022-01-09-20-40-15.png)
+
+如果存在多个vscode窗口，InfiniPy会全部列出，让用户选择
+![](${workspaceFolder}/attachments/2022-01-09-20-42-49.png)
+
+如果想要切换到不在"+Window"子菜单中的窗口，简单的输入空格，InfiniPy列出系统中的所有窗口
+![](attachments/goto_windows.png)
+
+在上图中，我们可以看到每个窗口的进程名，比如Microsoft Teams的进程名是"Teams.exe"。如果想要在"+Window"子菜单中增加一个键"m"代表Teams，可以输入Ds打开Space Key Config，在打开的文件中加入下面的代码。注意`proc_name`是大小写敏感的。
+```python
+wm_table = {
+    "m": ["teams", launcher.WindowFilter(proc_name="Teams.exe")],
+}
+
+add_space_key_children(root_node, "w", wm_table, launcher.goto_specific)
+```
+
+## 计算器插件
+
+可以输入任何python表达式，允许使用python内置函数和math库中的函数。如`sin(pi)`或`sum(range(1,100))`
+![](${workspaceFolder}/attachments/2022-01-09-20-56-03.png)
 
 # 插件开发
 
 ## 基础开发
 下面的动画展示了如何开发to_hex插件（将十进制数转化为十六进制数）。总时间小于1分钟。
 ![](attachments/plugin_development.gif)
-在这个动画中，和InfiniPy
-相关的知识只有几个快捷键
-- Capslock启动InfiniPy
+
+在上面的动画中只涉及两个额外的快捷键：
 - Dp打开插件开发环境
 - Alt-Capslock重启InfiniPy
-- 上下键或Ctrl-j、Ctrl-k用来在智能提示中上下移动，Tab或Enter用来选择，Enter还用于执行命令。
-
 除此之外，开发者写的代码完全不用考虑InfiniPy。
 
 ## 配置Spacekey
@@ -64,26 +108,36 @@ def calc(expr):
 
 Goto to a wndow(`launcher.goto`)允许我们切换到一个窗口，调用这个函数后，InfiniPy将会列出所有窗口，如下图所示。这本质上是通过intellisense实现的。具体实现方法请参考`launcher.goto`的代码。
 ![](attachments/goto_windows.png)
-# 常用插件
-
-
-普通用户也录制两个视频
-
-- 确定性的窗口切换和其他shortcut切换
-    解释窗口切换
-    - 一个图片解释普通窗口
-    - 一个图片解释多个窗口情况
-    - 一个图片解释直接搜索情况
-    - 解释配置 
-      - 一个图片找到窗口的exe文件名
-      - 一个图片解释配置方法
-    
-    用少量文件解释其他shortcut切换
-
-    一个视频解释配置windows方法
-    shortcut切换其
-- calculator
-
-如果您感兴趣窗口切换的功能，参考这个链接
 
 # 安装
+- 安装相关软件(autohotkey, git, python 3.8.5 or other compatible version, vscode)，如果您已经安装了这些软件，可以跳过这个步骤
+  - install choco
+    - run powershell with admin
+    - run following command to install choco
+    ```
+    Set-ExecutionPolicy Bypass -Scope Process
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    ```
+  - install related software
+    - open a Cmd window
+    - run following commands
+      ```dos
+      choco install -y autohotkey
+      choco install -y git
+      choco install -y python --version=3.8.5
+      choco install -y vscode
+      ```
+- Install InfiniPy
+  - open a new Cmd window (only new Cmd window can access the software we just installed)
+  - run following commands
+  ```dos
+  C:
+  cd \
+  mkdir temp
+  cd temp
+  git clone https://github.com/anselmwang/InfiniPy.git
+  cd InfiniPy
+  pip install pipenv
+  pipenv install  --dev
+  ```
+- Launch "run.ahk" in the InfiniPy directory
