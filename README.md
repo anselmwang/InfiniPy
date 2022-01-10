@@ -23,7 +23,7 @@ InfiniPy是一个类似于Wox的软件。在使用电脑时，我们经常想要
 # 日常使用
 ## 基础
 InfiniPy的主界面如下
-![](${workspaceFolder}/attachments/2022-01-09-20-37-58.png)
+![](attachments/2022-01-09-20-37-58.png)
 
 重要的插件有
 - w: [窗口切换插件](#窗口切换插件) 
@@ -42,10 +42,10 @@ InfiniPy的主界面如下
 ## 窗口切换插件
 
 在主界面下，输入w，进入"+Window"子菜单，通过按键或者上下键可以选择菜单项。如按d切换到vscode窗口。
-![](${workspaceFolder}/attachments/2022-01-09-20-40-15.png)
+![](attachments/2022-01-09-20-40-15.png)
 
 如果存在多个vscode窗口，InfiniPy会全部列出，让用户选择
-![](${workspaceFolder}/attachments/2022-01-09-20-42-49.png)
+![](attachments/2022-01-09-20-42-49.png)
 
 如果想要切换到不在"+Window"子菜单中的窗口，简单的输入空格，InfiniPy列出系统中的所有窗口
 ![](attachments/goto_windows.png)
@@ -62,7 +62,7 @@ add_space_key_children(root_node, "w", wm_table, launcher.goto_specific)
 ## 计算器插件
 
 可以输入任何python表达式，允许使用python内置函数和math库中的函数。如`sin(pi)`或`sum(range(1,100))`
-![](${workspaceFolder}/attachments/2022-01-09-20-56-03.png)
+![](attachments/2022-01-09-20-56-03.png)
 
 # 插件开发
 
@@ -110,12 +110,11 @@ Goto to a wndow(`launcher.goto`)允许我们切换到一个窗口，调用这个
 ![](attachments/goto_windows.png)
 
 # 安装
-- 安装相关软件(autohotkey, git, python 3.8.5 or other compatible version, vscode)，如果您已经安装了这些软件，可以跳过这个步骤
+- 安装相关软件(autohotkey, git, python 3.8.5 or other compatible version, vscode)，如果您已经安装了这些软件且这些软件在PATH中，可以跳过这个步骤
   - install choco
     - run powershell with admin
     - run following command to install choco
     ```
-    Set-ExecutionPolicy Bypass -Scope Process
     Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     ```
   - install related software
@@ -140,4 +139,6 @@ Goto to a wndow(`launcher.goto`)允许我们切换到一个窗口，调用这个
   pip install pipenv
   pipenv install  --dev
   ```
-- Launch "run.ahk" in the InfiniPy directory
+- Launch InfiniPy
+  - type "run.ahk" in the same Cmd window as before or double click "run.ahk" in InfiniPy directory
+- Press `<CapsLock>` and have fun!

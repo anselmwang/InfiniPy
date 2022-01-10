@@ -5,5 +5,5 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.envFile": "${workspaceFolder}/.env",
-    "pasteImage.path": "${workspaceFolder}/attachments/"
+    "pasteImage.path": "${projectRoot}/attachments/"
 }
