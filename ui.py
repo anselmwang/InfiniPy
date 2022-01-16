@@ -6,6 +6,7 @@ import functools
 from pprint import pformat, pprint
 import tkinter as tk
 import logging
+from logging.handlers import TimedRotatingFileHandler
 import traceback
 from typing import Callable, List
 from custom_widgets.rich_list import RichList
@@ -33,7 +34,7 @@ logger = logging.getLogger(os.path.basename(__file__))
 # logger.setLevel(logging.INFO)
 
 os.makedirs(app_common.PROJ_HOME, exist_ok=True)
-fileHandler = logging.FileHandler(app_common.LOG_PATH, encoding="utf-8")
+fileHandler = TimedRotatingFileHandler(app_common.LOG_PATH, encoding="utf-8", when="d", interval=1, backupCount=10)
 fileHandler.setFormatter(logFormatter)
 rootLogger.addHandler(fileHandler)
 
