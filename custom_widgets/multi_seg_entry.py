@@ -1,4 +1,3 @@
-
 import logging
 import tkinter as tk
 from enum import Enum
@@ -12,7 +11,9 @@ class MultiSegEntryEvent(Enum):
     EntryComplete = 2
     LastSegActivated = 3
 
+
 MultiSegEntryEventHandler = Callable[[MultiSegEntryEvent, tk.Widget], None]
+
 
 class MultiSegEntry(tk.Frame):
     def __init__(self, master):
@@ -25,7 +26,7 @@ class MultiSegEntry(tk.Frame):
             self._custom_event_dic[event] = None
 
         self.set([""])
-        
+
     def set(self, segs: List[str]):
         self._frozen_segs = segs[:-1]
         self._set_active_seg_no_event(segs[-1])
@@ -40,19 +41,20 @@ class MultiSegEntry(tk.Frame):
     def bind(self, event, handler):
         self._widgets[-1].bind(event, handler)
 
-    def custom_bind(self, event: MultiSegEntryEvent, handler: MultiSegEntryEventHandler):
+    def custom_bind(
+        self, event: MultiSegEntryEvent, handler: MultiSegEntryEventHandler
+    ):
         self._custom_event_dic[event] = handler
-
 
     def _set_active_seg_no_event(self, value):
         handler = self._custom_event_dic[MultiSegEntryEvent.ActiveSegChange]
         self._custom_event_dic[MultiSegEntryEvent.ActiveSegChange] = None
         self._active_seg.set(value)
         self._custom_event_dic[MultiSegEntryEvent.ActiveSegChange] = handler
-        
+
     def _on_active_seg_change(self, name, index, mode):
         self._trigger_custom_event(MultiSegEntryEvent.ActiveSegChange)
-    
+
     def _trigger_custom_event(self, ev: MultiSegEntryEvent):
         handler = self._custom_event_dic[ev]
         if handler is not None:
@@ -61,7 +63,7 @@ class MultiSegEntry(tk.Frame):
     def _on_key_tab(self, ev):
         self._finish_active()
         self._trigger_custom_event(MultiSegEntryEvent.ActiveSegFinished)
-        
+
     def _on_key_return(self, ev):
         self._finish_active()
         self._trigger_custom_event(MultiSegEntryEvent.EntryComplete)
@@ -72,7 +74,7 @@ class MultiSegEntry(tk.Frame):
             self._widgets[-1].focus()
             self._trigger_custom_event(MultiSegEntryEvent.LastSegActivated)
             return "break"
-            
+
     def _finish_active(self):
         self._frozen_segs.append(self._active_seg.get())
         self._set_active_seg_no_event("")
@@ -83,7 +85,7 @@ class MultiSegEntry(tk.Frame):
         self._set_active_seg_no_event(self._frozen_segs[-1])
         self._frozen_segs.pop()
         self._render()
-        
+
     def _render(self):
         for widget in self._widgets[:-1]:
             widget.destroy()
@@ -96,9 +98,8 @@ class MultiSegEntry(tk.Frame):
             self._widgets.append(label)
         active_entry.pack(fill=tk.X, padx=5, pady=5)
         self._widgets.append(active_entry)
-        
+
         active_entry.icursor(len(self._active_seg.get()))
         active_entry.bind("<Tab>", self._on_key_tab)
         active_entry.bind("<Return>", self._on_key_return)
         active_entry.bind("<BackSpace>", self._on_key_backspace)
-    

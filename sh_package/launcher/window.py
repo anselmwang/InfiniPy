@@ -13,6 +13,7 @@ from search import ListSearcher, MatchResult, TextMatcher
 logger = logging.getLogger(os.path.basename(__file__))
 # logger.setLevel(logging.DEBUG)
 
+
 @dataclass
 class Window:
     hwnd: int
@@ -27,8 +28,9 @@ class Window:
     @staticmethod
     def get_windows(window_filter: "WindowFilter" = None) -> "List[Window] ":
         windows = []
-        def winEnumHandler( hwnd, ctx ):
-            if not win32gui.IsWindowVisible( hwnd ):
+
+        def winEnumHandler(hwnd, ctx):
+            if not win32gui.IsWindowVisible(hwnd):
                 return
             if hwnd == self_hwnd:
                 return
@@ -49,15 +51,15 @@ class Window:
             pid = win32process.GetWindowThreadProcessId(hwnd)
             proc_name = psutil.Process(pid[-1]).name()
 
-            cur_win = Window(hwnd, class_name, proc_name, title) 
+            cur_win = Window(hwnd, class_name, proc_name, title)
             logger.debug(f"    cur_win: {cur_win}")
             if window_filter is not None and not window_filter.is_match(cur_win):
-                return 
+                return
             windows.append(cur_win)
 
         logger.debug("get_windows()")
         self_hwnd = win32gui.GetForegroundWindow()
-        win32gui.EnumWindows( winEnumHandler, None )
+        win32gui.EnumWindows(winEnumHandler, None)
         return windows
 
     def activate(self):
@@ -73,7 +75,8 @@ class Window:
     def minimize(self):
         win32gui.ShowWindow(self.hwnd, win32con.SW_MINIMIZE)
         win32gui.SetForegroundWindow(self.hwnd)
-    
+
+
 @dataclass
 class WindowFilter:
     hwnd: int = -1
@@ -87,20 +90,23 @@ class WindowFilter:
         hwnd, class_name, proc_name is exact match. `self.title` should be substring of `window.title`.
 
         Args:
-            window (Window): 
+            window (Window):
 
         Returns:
-            bool: 
+            bool:
         """
-        return (self.hwnd == -1 or self.hwnd == window.hwnd) and \
-            (self.class_name is None or self.class_name == window.class_name) and \
-            (self.proc_name is None or self.proc_name == window.proc_name) and \
-            (self.title is None or self.title in window.title)
+        return (
+            (self.hwnd == -1 or self.hwnd == window.hwnd)
+            and (self.class_name is None or self.class_name == window.class_name)
+            and (self.proc_name is None or self.proc_name == window.proc_name)
+            and (self.title is None or self.title in window.title)
+        )
+
 
 class WinListSearcher(ListSearcher):
     def _str_for_matcher(self, window: Window):
         PROC_NAME_MAX_LEN = 20
         return f"{window.proc_name.ljust(PROC_NAME_MAX_LEN)}    {window.title}"
-    
+
     def _str_for_show(self, match_str: str, window: Window):
         return match_str

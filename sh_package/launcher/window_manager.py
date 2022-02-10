@@ -6,23 +6,26 @@ from .. import package_manager
 from .window import Window, WindowFilter, WinListSearcher
 
 
-def _get_windows_skip_current(window_filter = None):
+def _get_windows_skip_current(window_filter=None):
     cur_win = Window.get_top_most_window()
     windows: List[Window] = Window.get_windows(window_filter)
     windows = [win for win in windows if win.hwnd != cur_win.hwnd]
     return windows
 
+
 def goto(window: Window) -> None:
     """Goto a window
 
     Args:
-        window (Window): 
+        window (Window):
     """
     window.activate()
 
 
-package_manager.register_type_searcher_factory(Window, lambda: WinListSearcher(_get_windows_skip_current()))
-    
+package_manager.register_type_searcher_factory(
+    Window, lambda: WinListSearcher(_get_windows_skip_current())
+)
+
 
 def goto_specific(window_filter: WindowFilter, window: Window = None):
     if window is None:
@@ -30,13 +33,12 @@ def goto_specific(window_filter: WindowFilter, window: Window = None):
         if len(windows) == 1:
             windows[0].activate()
         elif len(windows) == 0:
-            return StrSearcher([
-                f"Can't find window with filter '{window_filter}'"
-            ])
+            return StrSearcher([f"Can't find window with filter '{window_filter}'"])
         else:
             return WinListSearcher(windows)
     else:
         window.activate()
+
 
 def _goto_specific_intellisense(func_name, *args):
     if len(args) < 1:
@@ -46,10 +48,13 @@ def _goto_specific_intellisense(func_name, *args):
         windows = Window.get_windows(win_title)
         return WinListSearcher(windows)
 
+
 package_manager.register_op_intellisense(goto_specific, _goto_specific_intellisense)
+
 
 def minimize():
     Window.get_top_most_window().minimize()
+
 
 def maximize():
     Window.get_top_most_window().maximize()
