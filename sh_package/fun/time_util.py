@@ -1,5 +1,7 @@
-import pytz
 import datetime
+
+import pytz
+
 
 def _str_time(date_object):
     return date_object.strftime("%Y-%m-%d %H:%M:%S")

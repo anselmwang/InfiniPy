@@ -1,6 +1,6 @@
 
 # %%
-from search import Span, MatchResult, StrSearcher
+from search import MatchResult, Span, StrSearcher
 from sh_cmd import Cmd, Op, Symbol, SymbolListSearcher, get_function_signature
 from sh_package import package_manager
 

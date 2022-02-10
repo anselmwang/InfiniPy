@@ -1,15 +1,15 @@
+import functools
 import logging
 import os
+import subprocess
 import sys
 import time
-import subprocess
-from typing import Callable
 import webbrowser
-import functools
 from os.path import expanduser
+from typing import Callable
 
-from .window import Window, WindowFilter
 from .clipboard import get_clipboard_text
+from .window import Window, WindowFilter
 
 logger = logging.getLogger(os.path.basename(__file__))
 

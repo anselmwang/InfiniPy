@@ -1,6 +1,7 @@
-from typing import Callable, List, Tuple, Union
 import os
 from os.path import expanduser
+from typing import Callable, List, Tuple, Union
+
 from space_key import SpaceKeyNode
 
 PROJ_NAME = "InfiniPy"

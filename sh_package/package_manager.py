@@ -1,7 +1,8 @@
 import inspect
-from inspect import getmembers, isbuiltin, isfunction, ismodule, signature, _empty
+from inspect import _empty, getmembers, isbuiltin, isfunction, ismodule, signature
 from types import ModuleType
 from typing import List
+
 from sh_cmd import Op
 
 TYPE_2_SEARCHER_FACTORY_DICT = {

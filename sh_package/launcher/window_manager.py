@@ -1,5 +1,7 @@
 from typing import List
+
 from search import StrSearcher
+
 from .. import package_manager
 from .window import Window, WindowFilter, WinListSearcher
 

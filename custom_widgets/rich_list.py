@@ -1,8 +1,9 @@
+import logging
 import os
+import pprint
 import tkinter as tk
 from dataclasses import dataclass
-import logging
-import pprint
+
 # %%
 
 logger = logging.getLogger(os.path.basename(__file__))

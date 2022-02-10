@@ -1,9 +1,9 @@
 
-import tkinter as tk
 import logging
+import tkinter as tk
+from enum import Enum
 from tkinter.constants import W
 from typing import Callable, List
-from enum import Enum
 
 
 class MultiSegEntryEvent(Enum):

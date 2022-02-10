@@ -1,7 +1,7 @@
 # %%
 import logging
 import os
-from typing import Callable, List, Any, Optional
+from typing import Any, Callable, List, Optional
 
 from search import ListSearcher, TextMatcher
 

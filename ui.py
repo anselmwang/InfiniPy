@@ -1,22 +1,22 @@
 # %%
+import functools
 import logging
 import os
 import sys
-import functools
-from pprint import pformat, pprint
 import tkinter as tk
-import logging
-from logging.handlers import TimedRotatingFileHandler
 import traceback
+from logging.handlers import TimedRotatingFileHandler
+from pprint import pformat, pprint
 from typing import Callable, List
-from custom_widgets.rich_list import RichList
-from custom_widgets.multi_seg_entry import MultiSegEntry, MultiSegEntryEvent
-from search import ListSearcher, StrSearcher
-from sh_package import package_manager, launcher
-from sh_cmd import Cmd, Op
-from sh_package.launcher import window 
-from space_key import SpaceKeyNode, SpaceKeyNodeListSearcher
+
 import app_common
+from custom_widgets.multi_seg_entry import MultiSegEntry, MultiSegEntryEvent
+from custom_widgets.rich_list import RichList
+from search import ListSearcher, StrSearcher
+from sh_cmd import Cmd, Op
+from sh_package import launcher, package_manager
+from sh_package.launcher import window
+from space_key import SpaceKeyNode, SpaceKeyNodeListSearcher
 
 sys.path.insert(0, app_common.PROJ_HOME)
 

@@ -1,8 +1,8 @@
 # %%
-from typing import List, Optional, Text, Tuple
-from dataclasses import dataclass
 import logging
 import os
+from dataclasses import dataclass
+from typing import List, Optional, Text, Tuple
 
 logger = logging.getLogger(os.path.basename(__file__))
 # logger.setLevel(logging.INFO)

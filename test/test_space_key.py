@@ -1,6 +1,7 @@
-from space_key import SpaceKeyNode, SpaceKeyNodeListSearcher
 import logging
 import os
+
+from space_key import SpaceKeyNode, SpaceKeyNodeListSearcher
 
 logger = logging.getLogger(os.path.basename(__file__))
 # logger.setLevel(logging.INFO)

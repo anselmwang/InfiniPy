@@ -1,9 +1,15 @@
 import os
-from space_key import SpaceKeyNode
-from app_common import PROJ_HOME, PROJ_NAME, SOURCE_CODE_ROOT, Leaf, add_space_key_children
-import package_config
-from package_config import *
 
+import package_config
+from app_common import (
+    PROJ_HOME,
+    PROJ_NAME,
+    SOURCE_CODE_ROOT,
+    Leaf,
+    add_space_key_children,
+)
+from package_config import *
+from space_key import SpaceKeyNode
 
 space_key_config_path = os.path.join(PROJ_HOME, "space_key_config.py")
 if not os.path.isfile(space_key_config_path):

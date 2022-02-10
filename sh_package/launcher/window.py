@@ -1,12 +1,14 @@
 import logging
 import os
-from typing import List, Tuple
 from dataclasses import dataclass
-from search import ListSearcher, MatchResult, TextMatcher
-import win32gui
-import win32.lib.win32con as win32con
-import win32process
+from typing import List, Tuple
+
 import psutil
+import win32.lib.win32con as win32con
+import win32gui
+import win32process
+
+from search import ListSearcher, MatchResult, TextMatcher
 
 logger = logging.getLogger(os.path.basename(__file__))
 # logger.setLevel(logging.DEBUG)
