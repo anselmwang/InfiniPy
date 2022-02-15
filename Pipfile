@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pytz = "*"
 psutil = "*"
+pywin32 = "*"
 
 [dev-packages]
 pytest = "*"
