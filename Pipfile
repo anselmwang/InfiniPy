@@ -11,6 +11,7 @@ pywin32 = "*"
 [dev-packages]
 pytest = "*"
 jupyter = "*"
+ipykernel = "*"
 black = "*"
 isort = "*"
 flake8 = "*"

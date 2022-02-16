@@ -81,10 +81,7 @@ root_node = SpaceKeyNode(
 
 wm_table = {
     "b": ["browser", launcher.WindowFilter(proc_name="msedge.exe", cmd="msedge")],
-    "n": ["onenote", launcher.WindowFilter(proc_name="ONENOTE.EXE", cmd="onenote")],
-    "o": ["outlook", launcher.WindowFilter(proc_name="OUTLOOK.EXE", cmd="outlook")],
     "d": ["dev", launcher.WindowFilter(proc_name="Code.exe", cmd="code")],
-    "p": ["pdf", launcher.WindowFilter(proc_name="Acrobat.exe", cmd="acrobat")],
 }
 add_space_key_children(root_node, "w", wm_table, launcher.goto_specific)
 
