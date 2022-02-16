@@ -6,11 +6,15 @@ from .. import package_manager
 from .window import Window, WindowFilter, WinListSearcher
 
 
-def _get_windows_skip_current(window_filter=None):
+def _get_windows_skip_current_when_has_other(window_filter=None):
     cur_win = Window.get_top_most_window()
     windows: List[Window] = Window.get_windows(window_filter)
-    windows = [win for win in windows if win.hwnd != cur_win.hwnd]
-    return windows
+    windows_after_filtering = [win for win in windows if win.hwnd != cur_win.hwnd]
+    # Avoid launch another instance of current application when user's query only match current window
+    if len(windows_after_filtering) == 0:
+        return windows
+    else:
+        return windows_after_filtering
 
 
 def goto(window: Window) -> None:
@@ -23,13 +27,13 @@ def goto(window: Window) -> None:
 
 
 package_manager.register_type_searcher_factory(
-    Window, lambda: WinListSearcher(_get_windows_skip_current())
+    Window, lambda: WinListSearcher(_get_windows_skip_current_when_has_other())
 )
 
 
 def goto_specific(window_filter: WindowFilter, window: Window = None):
     if window is None:
-        windows = _get_windows_skip_current(window_filter)
+        windows = _get_windows_skip_current_when_has_other(window_filter)
         if len(windows) == 1:
             windows[0].activate()
         elif len(windows) == 0:
