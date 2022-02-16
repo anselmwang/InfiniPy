@@ -1,7 +1,7 @@
 from typing import List
 
 from search import StrSearcher
-
+import subprocess
 from .. import package_manager
 from .window import Window, WindowFilter, WinListSearcher
 
@@ -33,7 +33,14 @@ def goto_specific(window_filter: WindowFilter, window: Window = None):
         if len(windows) == 1:
             windows[0].activate()
         elif len(windows) == 0:
-            return StrSearcher([f"Can't find window with filter '{window_filter}'"])
+            result = f"Can't find window with filter '{window_filter}'." 
+            launch_cmd = window_filter.cmd
+            if launch_cmd != "":
+                result += f"Launch by '{launch_cmd}'."
+                subprocess.Popen(launch_cmd, shell=True)
+
+                
+            return StrSearcher([result])
         else:
             return WinListSearcher(windows)
     else:

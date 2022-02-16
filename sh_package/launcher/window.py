@@ -1,3 +1,4 @@
+from ctypes import Union
 import logging
 import os
 from dataclasses import dataclass
@@ -83,6 +84,7 @@ class WindowFilter:
     class_name: str = None
     proc_name: str = None
     title: str = None
+    cmd: Union[str, List[str]] = ""
 
     def is_match(self, window: Window) -> bool:
         """Whether window match current filter condition
