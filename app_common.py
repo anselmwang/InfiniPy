@@ -9,6 +9,7 @@ PROJ_NAME = "InfiniPy"
 HOME = os.getenv("HOME")
 if HOME is None:
     HOME = expanduser("~")
+print(HOME)
 
 PROJ_HOME = os.path.join(HOME, "." + PROJ_NAME.lower())
 LOG_PATH = "{0}/log.txt".format(PROJ_HOME)

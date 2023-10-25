@@ -4,7 +4,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 WinClose, % "InfiniPy ahk_class TkTopLevel ahk_exe python.exe"
 Run, run_gui_shell.bat    
-^CapsLock::
+
 {
     SetCapsLockState, % GetKeyState("CapsLock","T") ? "Off" : "On" ; Toggle the state of CapsLock LED
     return
@@ -17,7 +17,8 @@ Run, run_gui_shell.bat
     return
 }
 
-+CapsLock:: ; avoid accidental press shift+Capslock which switch the the case
+; +CapsLock:: ; avoid accidental press shift+Capslock which switch the the case
+; ^CapsLock:: ; Ctrl CapsLock
 CapsLock::
 {
     SetKeyDelay, 10
