@@ -110,7 +110,7 @@ Goto to a wndow(`launcher.goto`)允许我们切换到一个窗口，调用这个
 ![](attachments/goto_windows.png)
 
 # 安装
-- 安装相关软件(autohotkey, git, python 3.8.5 or other compatible version, vscode)，如果您已经安装了这些软件且这些软件在PATH中，可以跳过这个步骤
+- 安装相关软件(autohotkey, git, python, vscode)，如果您已经安装了这些软件且这些软件在PATH中，可以跳过这个步骤
   - install choco
     - run powershell with admin
     - run following command to install choco
@@ -123,7 +123,7 @@ Goto to a wndow(`launcher.goto`)允许我们切换到一个窗口，调用这个
       ```dos
       choco install -y autohotkey
       choco install -y git
-      choco install -y python --version=3.8.5
+      choco install -y python --version=3.9.13
       choco install -y vscode
       ```
 - Install InfiniPy
