@@ -40,6 +40,7 @@ fileHandler = TimedRotatingFileHandler(
 fileHandler.setFormatter(logFormatter)
 rootLogger.addHandler(fileHandler)
 
+logger.debug(space_key_config.__file__)
 
 # %%
 
@@ -328,7 +329,9 @@ class App(tk.Tk):
 
     def on_closing(self):
         logger.info("on_closing")
-        self.destroy()
+        logger.info("Closing the root window is not allowed.")
+        self.wm_state("iconic")
+        # self.destroy()
 
 
 root = App()
