@@ -26,7 +26,7 @@ root_node = SpaceKeyNode(
         SpaceKeyNode(
             "w",
             "Window",
-            [Leaf(" ", "Goto windows without space key", launcher.goto, [], False)],
+            [Leaf("w", "Goto windows without space key", launcher.goto, [], False)],
         ),
         SpaceKeyNode(
             "W",
