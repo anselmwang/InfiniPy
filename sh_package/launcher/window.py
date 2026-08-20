@@ -74,8 +74,11 @@ class Window:
         win32gui.SetForegroundWindow(self.hwnd)
 
     def minimize(self):
+        # No SetForegroundWindow here. It does not un-minimize the window, it
+        # just makes the now invisible window the foreground one, so the
+        # keyboard focus lands off screen and typing goes nowhere. SW_MINIMIZE
+        # already activates the next top level window in the Z order.
         win32gui.ShowWindow(self.hwnd, win32con.SW_MINIMIZE)
-        win32gui.SetForegroundWindow(self.hwnd)
 
 
 @dataclass
