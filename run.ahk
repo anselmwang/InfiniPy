@@ -23,7 +23,11 @@ CapsLock::
 {
     SetKeyDelay, 10
     SetWinDelay, 10
-    WinShow, % "InfiniPy ahk_class TkTopLevel ahk_exe python.exe"
+    ; WinShow (ShowWindow SW_SHOW) was here, but it is a no-op: it does not
+    ; un-minimize a window, and the app never hides itself with withdraw(),
+    ; only with wm_state("iconic"). WinRestore makes the un-minimize explicit
+    ; instead of relying on WinActivate's internal restore.
+    WinRestore, % "InfiniPy ahk_class TkTopLevel ahk_exe python.exe"
     WinActivate, % "InfiniPy ahk_class TkTopLevel ahk_exe python.exe"
     Send, ^g
     return

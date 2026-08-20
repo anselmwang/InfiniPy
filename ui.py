@@ -273,11 +273,11 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title(app_common.PROJ_NAME)
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        self.geometry(f"+{int(0.25*screen_width)}+{int(0.25*screen_height)}")
+        self._move_to_default_pos()
         self.bind("<Escape>", self.hide)
         self.bind("<Control-g>", self.restart)
+        self.bind("<Configure>", self._watch_position)
+        self.after(2000, self._poll_position)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         self._space_frame = SpaceFrame(self)
@@ -315,7 +315,62 @@ class App(tk.Tk):
         else:
             self._cmd_frame.set(input_cmd_segs)
 
+    def _move_to_default_pos(self):
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        self.geometry(f"+{int(0.4*screen_width)}+{int(0.25*screen_height)}")
+
+    def _watch_position(self, ev=None):
+        """Log the moment the window ends up parked off screen.
+
+        Symptom being chased: the window is sometimes found in state "normal"
+        at (-32000, -32000) -- the spot Windows parks minimized windows at --
+        with its stored restore position poisoned to the same value. It is
+        active and receives keystrokes, but is invisible, and stays that way
+        until the process is restarted. Nothing in this repo moves the window
+        except Tk itself, so log who is on the stack when it happens.
+        """
+        x, y = self.winfo_x(), self.winfo_y()
+        if x > -30000 and y > -30000:
+            self._off_screen_reported = False
+            return
+        if getattr(self, "_off_screen_reported", False):
+            return
+        self._off_screen_reported = True
+        logger.error(
+            f"Window went off screen: tk_xy=({x}, {y}) tk_state={self.wm_state()} "
+            f"tk_geometry={self.geometry()} event={ev}"
+        )
+        logger.error("Python stack at that moment:" + chr(10) + "".join(traceback.format_stack()))
+
+    def _poll_position(self):
+        """Catch off-screen moves that arrive without a Tk <Configure> event."""
+        try:
+            self._watch_position()
+        finally:
+            self.after(2000, self._poll_position)
+
+    def _ensure_visible(self):
+        """Make sure the window is really restored and on screen.
+
+        Self-heal for the bug described in _watch_position: whatever parks the
+        window at (-32000, -32000), pressing the hotkey should bring it back
+        rather than require killing the process.
+        """
+        if self.wm_state() != "normal":
+            self.deiconify()
+        self.update_idletasks()
+        if self.winfo_x() < -30000 or self.winfo_y() < -30000:
+            logger.warning(
+                f"Window parked off screen at ({self.winfo_x()}, {self.winfo_y()}), "
+                "moving it back."
+            )
+            self._move_to_default_pos()
+        self.lift()
+        self.focus_force()
+
     def restart(self, ev):
+        self._ensure_visible()
         self._space_frame.pack()
         self._cmd_frame.pack_forget()
         self._space_frame.focus()
